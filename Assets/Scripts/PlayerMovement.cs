@@ -15,7 +15,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        // Left / right movement
+        // Horizontal Movement
         float move = Input.GetAxisRaw("Horizontal");
 
         rb.linearVelocity = new Vector2(
@@ -23,29 +23,33 @@ public class PlayerMovement : MonoBehaviour
             rb.linearVelocity.y
         );
 
-        // Jump
+        // Jump with Spacebar
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
             rb.linearVelocity = new Vector2(
                 rb.linearVelocity.x,
                 jumpForce
             );
+
+            isGrounded = false;
         }
     }
 
+    // Check whether the player is standing on top of a surface
     private void OnCollisionStay2D(Collision2D collision)
     {
-        if (collision.gameObject == GameObject.Find("Ground"))
+        foreach (ContactPoint2D contact in collision.contacts)
         {
-            isGrounded = true;
+            if (contact.normal.y > 0.5f)
+            {
+                isGrounded = true;
+                return;
+            }
         }
     }
 
     private void OnCollisionExit2D(Collision2D collision)
     {
-        if (collision.gameObject == GameObject.Find("Ground"))
-        {
-            isGrounded = false;
-        }
+        isGrounded = false;
     }
 }
