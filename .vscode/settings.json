@@ -67,5 +67,5 @@
         "*.sln": "*.csproj",
         "*.slnx": "*.csproj"
     },
-    "dotnet.defaultSolution": "Dying to Win.slnx"
+    "dotnet.defaultSolution": "WrongDeath.slnx"
 }
